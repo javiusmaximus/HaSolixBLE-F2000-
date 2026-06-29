@@ -7,6 +7,13 @@ from typing import Any
 from bleak.backends.scanner import AdvertisementData, BLEDevice
 from habluetooth import BluetoothServiceInfoBleak
 from SolixBLE import LightStatus, PortStatus
+from SolixBLE.devices.solarbank2 import (
+    GridStatus,
+    LightMode,
+    MaxLoadSB2,
+    SBPowerCutoff,
+    SBUsageMode,
+)
 
 from custom_components.solix_ble.const import Models
 
@@ -166,6 +173,13 @@ MOCK_PRIME_250_DETAILS = MockDeviceDetails(
     addr="AA:BB:CC:DD:00:01",
     model_string="Prime Charger (250w)",
     model_class=Models.PRIME_CHARGER_250,
+)
+
+MOCK_SOLAR_BANK_2_DETAILS = MockDeviceDetails(
+    name="Solar Bank 2",
+    addr="AA:BB:CC:DD:00:02",
+    model_string="Solarbank 2",
+    model_class=Models.SOLARBANK_2,
 )
 
 MOCK_UNKNOWN_DETAILS = MockDeviceDetails(
@@ -335,6 +349,46 @@ MOCK_PRIME_250_TEST_DATA = {
     "usb_port_c4": ("status_usb_c4", PortStatus.OUTPUT),
     "usb_port_a1": ("status_usb_a1", PortStatus.OUTPUT),
     "usb_port_a2": ("status_usb_a2", PortStatus.NOT_CONNECTED),
+}
+
+
+# Sometimes the method name we are patching and the
+# entity ID do not line up, so a tuple is used to
+# manually specify it
+MOCK_SOLAR_BANK_2_TEST_DATA = {
+    "battery_percentage": 56,
+    "software_version": ("firmware_version", "0.0.1"),
+    "software_version_expansion": ("expansion_battery_firmware_version", "0.0.2"),
+    "serial_number": "0.1.2.3",
+    "temperature": -5,
+    "solar_power_in": 150.3,
+    "ac_power_out": 700.1,
+    "battery_percentage_aggregate": ("average_battery_percentage", 90),
+    "battery_charge_power": 0,
+    "pv_yield": 1053.2,
+    "charged_energy": ("battery_input_energy", 124.3),
+    "output_energy": ("total_output_energy", 12.7),
+    "output_cutoff_data": ("output_cutoff_threshold", SBPowerCutoff.P5, "5%"),
+    "input_cutoff_data": ("input_cutoff_threshold", SBPowerCutoff.P10, "10%"),
+    "battery_discharge_power": 12.4,
+    "grid_to_home_power": 12.5,
+    "pv_to_grid_power": 1245.1,
+    "grid_import_energy": 12.3,
+    "grid_export_energy": 1257.3,
+    "house_demand": ("house_demand_power", 124.6),
+    "ac_power_out_sockets": 1.67,
+    "max_load": ("maximum_load", MaxLoadSB2.W350, "350w"),
+    "usage_mode": ("usage_mode", SBUsageMode.MANUAL, "Manual"),
+    "consumed_energy": ("house_consumed_energy", 124.5),
+    "solar_pv_1_power_in": ("solar_power_in_port_1", 13.1),
+    "solar_pv_2_power_in": ("solar_power_in_port_2", 13.2),
+    "solar_pv_3_power_in": ("solar_power_in_port_3", 13.3),
+    "solar_pv_4_power_in": ("solar_power_in_port_4", 13.4),
+    "power_out": ("total_power_out", 14.745),
+    "error_code": 0,
+    "light_mode": ("status_light", LightMode.NORMAL, "Normal"),
+    "grid_status": ("grid_status", GridStatus.OK, "Ok"),
+    "battery_heating": True,
 }
 
 MOCK_UNKNOWN_TEST_DATA = {}

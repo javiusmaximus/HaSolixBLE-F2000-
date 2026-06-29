@@ -4,7 +4,17 @@ from enum import Enum
 
 DOMAIN = "solix_ble"
 
+
+###############
+# Port status #
+###############
+
 PORT_STATUS_STRINGS = ["Unknown", "Not connected", "Output", "Input"]
+
+
+###################
+# Charging status #
+###################
 
 CHARGING_STATUS_C300_STRINGS = ["Unknown", "Idle", "Discharging", "Charging"]
 
@@ -16,9 +26,63 @@ CHARGING_STATUS_F3800_STRINGS = [
     "Charging (Both)",
 ]
 
+
+################
+# Light status #
+################
+
 LIGHT_STATUS_STRINGS = ["Unknown", "Off", "Low", "Medium", "High"]
 
+LIGHT_STATUS_SB2_STRINGS = ["Unknown", "Normal", "Mood"]
+
+
+###################
+# Overload status #
+###################
+
 OVERLOAD_STATUS_C300DC_STRINGS = ["Unknown", "None", "USB C1", "USB C2", "USB C3"]
+
+
+###################
+# Max load status #
+###################
+
+MAX_LOAD_SB2_STRINGS = ["Unknown", "350w", "600w", "800w", "1000w"]
+
+
+###############
+# Grid status #
+###############
+
+GRID_STATUS_STRINGS = ["Unknown", "Ok", "Ok?", "Connecting", "No grid"]
+
+
+##############
+# Usage mode #
+##############
+
+USAGE_MODE_SB2_STRINGS = [
+    "Unknown",
+    "Manual",
+    "Smart meter",
+    "Smart plugs",
+    "Backup",
+    "Use Time",
+    "Smart",
+    "Time slot",
+]
+
+
+##################
+# Battery cutoff #
+##################
+
+CUT_OFF_SB2_STRINGS = ["Unknown", "5%", "10%"]
+
+
+####################
+# Supported models #
+####################
 
 
 class Models(Enum):
@@ -31,4 +95,5 @@ class Models(Enum):
     F3800 = "F3800"
     PRIME_CHARGER_160 = "Prime Charger (160w)"
     PRIME_CHARGER_250 = "Prime Charger (250w)"
+    SOLARBANK_2 = "Solarbank 2"
     UNKNOWN = "Unknown"

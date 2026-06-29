@@ -24,6 +24,7 @@ from . import (
     MOCK_F3800_DETAILS,
     MOCK_PRIME_160_DETAILS,
     MOCK_PRIME_250_DETAILS,
+    MOCK_SOLAR_BANK_2_DETAILS,
     MOCK_UNKNOWN_DETAILS,
     BLEDevice,
     MockDeviceDetails,
@@ -45,6 +46,7 @@ from .conftest import MockConfigEntry
         MOCK_F3800_DETAILS,
         MOCK_PRIME_160_DETAILS,
         MOCK_PRIME_250_DETAILS,
+        MOCK_SOLAR_BANK_2_DETAILS,
         MOCK_UNKNOWN_DETAILS,
     ],
     ids=[
@@ -59,6 +61,7 @@ from .conftest import MockConfigEntry
         "f3800",
         "prime_160w",
         "prime_250w",
+        "solar_bank_2",
         "unknown",
     ],
 )

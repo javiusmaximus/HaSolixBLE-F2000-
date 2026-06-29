@@ -30,6 +30,8 @@ from . import (
     MOCK_PRIME_160_TEST_DATA,
     MOCK_PRIME_250_DETAILS,
     MOCK_PRIME_250_TEST_DATA,
+    MOCK_SOLAR_BANK_2_DETAILS,
+    MOCK_SOLAR_BANK_2_TEST_DATA,
     MOCK_UNKNOWN_DETAILS,
     MOCK_UNKNOWN_TEST_DATA,
     MockDeviceDetails,
@@ -93,6 +95,13 @@ from . import (
             "PrimeCharger250w",
             MOCK_PRIME_250_TEST_DATA,
             id="prime_250w",
+        ),
+        pytest.param(
+            MOCK_SOLAR_BANK_2_DETAILS,
+            MOCK_SOLAR_BANK_2_DETAILS,
+            "Solarbank2",
+            MOCK_SOLAR_BANK_2_TEST_DATA,
+            id="solar_bank_2",
         ),
         pytest.param(
             MOCK_UNKNOWN_DETAILS,
@@ -162,8 +171,10 @@ async def test_sensor_entities(
 
             # If the entity ID is manually specified use that rather
             # than using the method name of the underlying class
+            str_value = None
             if type(value) is tuple:
                 key = value[0]
+                str_value = value[2] if len(value) == 3 else None
                 value = value[1]
 
             # There are not enough words in the universe to express how
@@ -175,6 +186,9 @@ async def test_sensor_entities(
             # its name to get the correct value that HA will have
             elif type(value) is PortStatus or type(value) is LightStatus:
                 value = value.name.capitalize().replace("_", " ")
+
+            elif str_value is not None:
+                value = str_value
 
             else:
                 value = f"{value}"
