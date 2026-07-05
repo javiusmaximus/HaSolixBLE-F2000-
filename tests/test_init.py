@@ -26,6 +26,7 @@ from . import (
     MOCK_F3800_DETAILS,
     MOCK_PRIME_160_DETAILS,
     MOCK_PRIME_250_DETAILS,
+    MOCK_PRIME_POWER_BANK_20K_DETAILS,
     MOCK_SOLAR_BANK_2_DETAILS,
     MOCK_UNKNOWN_DETAILS,
     MockDeviceDetails,
@@ -47,6 +48,7 @@ from .conftest import MockConfigEntry
         pytest.param(MOCK_F3800_DETAILS, MOCK_F3800_DETAILS, id="f3800"),
         pytest.param(MOCK_PRIME_160_DETAILS, MOCK_PRIME_160_DETAILS, id="prime_160w"),
         pytest.param(MOCK_PRIME_250_DETAILS, MOCK_PRIME_250_DETAILS, id="prime_250w"),
+        pytest.param(MOCK_PRIME_POWER_BANK_20K_DETAILS, MOCK_PRIME_POWER_BANK_20K_DETAILS, id="prime_power_bank_20k"),
         pytest.param(
             MOCK_SOLAR_BANK_2_DETAILS, MOCK_SOLAR_BANK_2_DETAILS, id="solar_bank_2"
         ),

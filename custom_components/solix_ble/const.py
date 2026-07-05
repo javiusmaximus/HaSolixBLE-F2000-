@@ -95,5 +95,6 @@ class Models(Enum):
     F3800 = "F3800"
     PRIME_CHARGER_160 = "Prime Charger (160w)"
     PRIME_CHARGER_250 = "Prime Charger (250w)"
+    PRIME_POWER_BANK_20K = "Prime Power Bank 20k (220w)"
     SOLARBANK_2 = "Solarbank 2"
     UNKNOWN = "Unknown"

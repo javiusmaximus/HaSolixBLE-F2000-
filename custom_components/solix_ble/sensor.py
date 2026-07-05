@@ -22,6 +22,7 @@ from SolixBLE import (
     F3800,
     PrimeCharger160w,
     PrimeCharger250w,
+    PrimePowerBank20k,
     Solarbank2,
     SolixBLEDevice,
 )
@@ -107,7 +108,17 @@ async def async_setup_entry(
         ),
 
     # Battery percentage sensor
-    if type(device) in [C300, C300DC, C800, C1000, C1000G2, F2000, F3800, Solarbank2]:
+    if type(device) in [
+        C300,
+        C300DC,
+        C800,
+        C1000,
+        C1000G2,
+        F2000,
+        F3800,
+        Solarbank2,
+        PrimePowerBank20k,
+    ]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -209,7 +220,17 @@ async def async_setup_entry(
         )
 
     # Temperature sensor
-    if type(device) in [C300, C300DC, C800, C1000, C1000G2, F2000, F3800, Solarbank2]:
+    if type(device) in [
+        C300,
+        C300DC,
+        C800,
+        C1000,
+        C1000G2,
+        F2000,
+        F3800,
+        Solarbank2,
+        PrimePowerBank20k,
+    ]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -229,7 +250,16 @@ async def async_setup_entry(
         )
 
     # Total power out sensor
-    if type(device) in [C300, C300DC, C800, C1000, C1000G2, F3800, Solarbank2]:
+    if type(device) in [
+        C300,
+        C300DC,
+        C800,
+        C1000,
+        C1000G2,
+        F3800,
+        Solarbank2,
+        PrimePowerBank20k,
+    ]:
         sensors.append(
             SolixSensorEntity(
                 device, "Total Power Out", "W", "power_out", SensorDeviceClass.POWER
@@ -377,6 +407,7 @@ async def async_setup_entry(
         F3800,
         PrimeCharger160w,
         PrimeCharger250w,
+        PrimePowerBank20k,
     ]:
         sensors.append(
             SolixSensorEntity(
@@ -399,6 +430,7 @@ async def async_setup_entry(
         F3800,
         PrimeCharger160w,
         PrimeCharger250w,
+        PrimePowerBank20k,
     ]:
         sensors.append(
             SolixSensorEntity(
@@ -452,6 +484,7 @@ async def async_setup_entry(
         F2000,
         F3800,
         PrimeCharger250w,
+        PrimePowerBank20k,
     ]:
         sensors.append(
             SolixSensorEntity(
@@ -483,6 +516,7 @@ async def async_setup_entry(
         F3800,
         PrimeCharger160w,
         PrimeCharger250w,
+        PrimePowerBank20k,
     ]:
         sensors.append(
             SolixSensorEntity(
@@ -504,6 +538,7 @@ async def async_setup_entry(
         F3800,
         PrimeCharger160w,
         PrimeCharger250w,
+        PrimePowerBank20k,
     ]:
         sensors.append(
             SolixSensorEntity(
@@ -553,7 +588,14 @@ async def async_setup_entry(
         )
 
     # USB A1 status
-    if type(device) in [C300, C300DC, C1000G2, F3800, PrimeCharger250w]:
+    if type(device) in [
+        C300,
+        C300DC,
+        C1000G2,
+        F3800,
+        PrimeCharger250w,
+        PrimePowerBank20k,
+    ]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -595,7 +637,7 @@ async def async_setup_entry(
         )
 
     # USB C1 voltage out
-    if type(device) in [PrimeCharger160w, PrimeCharger250w]:
+    if type(device) in [PrimeCharger160w, PrimeCharger250w, PrimePowerBank20k]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -607,7 +649,7 @@ async def async_setup_entry(
         )
 
     # USB C2 voltage out
-    if type(device) in [PrimeCharger160w, PrimeCharger250w]:
+    if type(device) in [PrimeCharger160w, PrimeCharger250w, PrimePowerBank20k]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -643,7 +685,7 @@ async def async_setup_entry(
         )
 
     # USB A1 voltage out
-    if type(device) in [PrimeCharger250w]:
+    if type(device) in [PrimeCharger250w, PrimePowerBank20k]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -667,7 +709,7 @@ async def async_setup_entry(
         )
 
     # USB C1 current out
-    if type(device) in [PrimeCharger160w, PrimeCharger250w]:
+    if type(device) in [PrimeCharger160w, PrimeCharger250w, PrimePowerBank20k]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -679,7 +721,7 @@ async def async_setup_entry(
         )
 
     # USB C2 current out
-    if type(device) in [PrimeCharger160w, PrimeCharger250w]:
+    if type(device) in [PrimeCharger160w, PrimeCharger250w, PrimePowerBank20k]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -715,7 +757,7 @@ async def async_setup_entry(
         )
 
     # USB A1 current out
-    if type(device) in [PrimeCharger250w]:
+    if type(device) in [PrimeCharger250w, PrimePowerBank20k]:
         sensors.append(
             SolixSensorEntity(
                 device,

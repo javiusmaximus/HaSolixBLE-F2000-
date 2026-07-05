@@ -175,6 +175,13 @@ MOCK_PRIME_250_DETAILS = MockDeviceDetails(
     model_class=Models.PRIME_CHARGER_250,
 )
 
+MOCK_PRIME_POWER_BANK_20K_DETAILS = MockDeviceDetails(
+    name="Anker Prime Power Bank",
+    addr="AA:BB:CC:DD:00:05",
+    model_string="Prime Power Bank 20k (220w)",
+    model_class=Models.PRIME_POWER_BANK_20K,
+)
+
 MOCK_SOLAR_BANK_2_DETAILS = MockDeviceDetails(
     name="Solar Bank 2",
     addr="AA:BB:CC:DD:00:02",
@@ -349,6 +356,27 @@ MOCK_PRIME_250_TEST_DATA = {
     "usb_port_c4": ("status_usb_c4", PortStatus.OUTPUT),
     "usb_port_a1": ("status_usb_a1", PortStatus.OUTPUT),
     "usb_port_a2": ("status_usb_a2", PortStatus.NOT_CONNECTED),
+}
+
+# Sometimes the method name we are patching and the
+# entity ID do not line up, so a tuple is used to
+# manually specify it
+MOCK_PRIME_POWER_BANK_20K_TEST_DATA = {
+    "battery_percentage": 69,
+    "temperature": 35,
+    "power_out": ("total_power_out", 3.1),
+    "usb_c1_power": 0.0,
+    "usb_c2_power": 10.1,
+    "usb_a1_power": 1.1,
+    "usb_c1_current": 0.0,
+    "usb_c2_current": 1.4,
+    "usb_a1_current": 0.5,
+    "usb_c1_voltage": 0.0,
+    "usb_c2_voltage": 19.9,
+    "usb_a1_voltage": 5.1,
+    "usb_port_c1": ("status_usb_c1", PortStatus.NOT_CONNECTED),
+    "usb_port_c2": ("status_usb_c2", PortStatus.INPUT),
+    "usb_port_a1": ("status_usb_a1", PortStatus.OUTPUT),
 }
 
 
