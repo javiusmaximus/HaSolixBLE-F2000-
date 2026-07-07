@@ -291,7 +291,7 @@ async def async_setup_entry(
         )
 
     # AC output on/off sensor
-    if type(device) in [C300, C800, C1000, C1000G2, F3800]:
+    if type(device) in [C300, C800, C1000, C1000G2, F2000, F3800]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -305,7 +305,7 @@ async def async_setup_entry(
         )
 
     # AC output timer
-    if type(device) in [C300, C800, C1000]:
+    if type(device) in [C300, C800, C1000, F2000]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -370,7 +370,7 @@ async def async_setup_entry(
 
     # DC power out status
     # TODO: Reenable for C1000 when underlying library fixes
-    if type(device) in [C300, C1000G2, F3800]:
+    if type(device) in [C300, C1000G2, F2000, F3800]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -384,7 +384,7 @@ async def async_setup_entry(
         )
 
     # DC Timer
-    if type(device) in [C300, C300DC]:
+    if type(device) in [C300, C300DC, F2000]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -781,7 +781,7 @@ async def async_setup_entry(
         )
 
     # Light status
-    if type(device) in [C300, C300DC]:
+    if type(device) in [C300, C300DC, F2000]:
         sensors.append(
             SolixSensorEntity(
                 device,
@@ -795,7 +795,7 @@ async def async_setup_entry(
         )
 
     # Display status
-    if type(device) in [C300DC]:
+    if type(device) in [C300DC, F2000]:
         sensors.append(
             SolixSensorEntity(
                 device,
