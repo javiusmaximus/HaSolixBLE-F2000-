@@ -129,6 +129,7 @@ class SolixSelectEntity(SelectEntity):
         self._set_function = getattr(device, set_function_attribute)
 
         self._attr_name = name
+        self._attr_current_option = None
         self._attr_unique_id = f"{device.address}_{attribute}"
         self._attr_options = list(options.keys())
         self._attr_device_info = DeviceInfo(
@@ -149,7 +150,16 @@ class SolixSelectEntity(SelectEntity):
         """Update this entities updatable attrs from the devices state."""
         self._attr_available = self._device.available
 
-        state = getattr(self._device, self._state_attribute)
+        # The underlying telemetry key for these settings (e.g. display
+        # brightness/timeout) is not present in every passive telemetry push;
+        # it only arrives on an explicit status poll. When absent the property
+        # reads as UNKNOWN/-1 (or, for ``light``, raises because the key is
+        # missing). In that case keep the last known selection rather than
+        # resetting the entity to an unknown state.
+        try:
+            state = getattr(self._device, self._state_attribute)
+        except Exception:  # noqa: BLE001 - telemetry key absent from this push
+            return
 
         current_option = None
         for option, value in self._options_map.items():
@@ -158,7 +168,10 @@ class SolixSelectEntity(SelectEntity):
                 current_option = option
                 break
 
-        self._attr_current_option = current_option
+        # Only overwrite when we have a definitive match. A non-match means the
+        # value was not in this telemetry update, not that it changed.
+        if current_option is not None:
+            self._attr_current_option = current_option
 
     def _state_change_callback(self) -> None:
         """Run when device informs of state update. Updates local properties."""
@@ -169,3 +182,7 @@ class SolixSelectEntity(SelectEntity):
     async def async_select_option(self, option: str) -> None:
         """Change the selected option."""
         await self._set_function(self._options_map[option])
+        # Reflect the change immediately; the device does not reliably echo
+        # these settings back in passive telemetry.
+        self._attr_current_option = option
+        self.async_write_ha_state()

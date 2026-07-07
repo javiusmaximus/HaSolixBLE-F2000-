@@ -220,7 +220,10 @@ class SolixSwitchEntity(SwitchEntity):
                     raise RuntimeError(
                         f"Unexpected port status '{state}' with type '{type(state)}'!"
                     )
-            else:
+            # A bool state of None means the value was not in this telemetry
+            # push (e.g. display on/off is only reported on an explicit poll).
+            # Keep the last known state rather than resetting to unknown.
+            elif state is not None:
                 self._attr_is_on = state
 
     def _state_change_callback(self) -> None:
@@ -232,7 +235,13 @@ class SolixSwitchEntity(SwitchEntity):
     async def async_turn_on(self, **kwargs):
         """Turn the entity on."""
         await self._on_function()
+        # Reflect immediately; some states (e.g. display) are not echoed back
+        # in passive telemetry.
+        self._attr_is_on = True
+        self.async_write_ha_state()
 
     async def async_turn_off(self, **kwargs):
-        """Turn the entity on."""
+        """Turn the entity off."""
         await self._off_function()
+        self._attr_is_on = False
+        self.async_write_ha_state()
