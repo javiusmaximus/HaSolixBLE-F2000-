@@ -1,6 +1,6 @@
 # Home Assistant Solix BLE
 
-Home Assistant integration for monitoring and controlling Anker Solix devices using a Bluetooth connection.
+Home Assistant integration for monitoring and controlling Anker devices using a Bluetooth connection.
 
 ## Features
 
@@ -13,7 +13,7 @@ Home Assistant integration for monitoring and controlling Anker Solix devices us
 - ⏲️ Time remaining to full/empty
 - ☀️ Solar Power In
 - 💻 USB Port Power
-- 📱 USB Port Status
+- 📱 USB Port Status & control
 - ⚙️ Firmware version
 - 🩺 Battery health
 - 🌡️ Battery temperature
@@ -34,7 +34,10 @@ This lists the supported devices, more information on what features are supporte
 - C1000(X) Gen 2
 - F2000
 - F3800
+- Anker Prime 160w Charger
 - Anker Prime 250w Charger
+- Anker Prime 20k (220w) Power Bank
+- Solarbank 2
 - Potentially more!
 
 ## Installation (HACS)
