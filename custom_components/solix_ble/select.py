@@ -9,7 +9,7 @@ from homeassistant.components.select import SelectEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import CONNECTION_BLUETOOTH, DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from SolixBLE import F2000, DisplayTimeout, LightStatus, SolixBLEDevice
+from SolixBLE import C1000, F2000, DisplayTimeout, LightStatus, SolixBLEDevice
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -51,11 +51,11 @@ async def async_setup_entry(
     selects: list[SolixSelectEntity] = []
 
     # Support for light mode select.
-    # NOTE: The F2000 does not expose a usable light-status readback (telemetry
-    # key 'cf' is stuck reporting OFF regardless of the actual state), so this
-    # is a write-only control (state_attribute=None) driven purely by the last
-    # commanded value.
-    if type(device) in [F2000]:
+    # NOTE: This is a write-only control (state_attribute=None) driven purely by
+    # the last commanded value. Neither model exposes a usable light-status
+    # readback: the C1000 has no light property at all, and on the F2000 the
+    # light telemetry key ('cf') is stuck reporting OFF regardless of state.
+    if type(device) in [C1000, F2000]:
         selects.append(
             SolixSelectEntity(
                 device,

@@ -32,8 +32,8 @@ from .const import Models
 
 _LOGGER = logging.getLogger(__name__)
 
-# Interval for actively polling the device for settings that are not included
-# in passive telemetry pushes (see the F2000 polling setup below).
+# Interval for actively polling devices for state that is not reliably pushed
+# over passive telemetry (see the status-poll setup in async_setup_entry).
 POLL_INTERVAL = timedelta(seconds=60)
 
 type SolixBLEConfigEntry = ConfigEntry[SolixBLEDevice]
@@ -119,12 +119,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: SolixBLEConfigEntry) -> 
         entry, [Platform.SENSOR, Platform.SWITCH, Platform.SELECT, Platform.NUMBER]
     )
 
-    # The F2000 only reports several settings (display brightness/timeout,
-    # display on/off, power saving mode, AC charging power) in response to an
-    # explicit status poll - they are absent from passive telemetry pushes.
-    # Poll periodically so those entities reflect live device state instead of
-    # only the last value commanded from Home Assistant.
-    if isinstance(device, F2000):
+    # Some devices (e.g. F2000, C1000) do not push every state change over
+    # passive telemetry - certain settings, and even physical on/off changes
+    # made on the unit, are only reflected when the device is explicitly
+    # polled. For any device that supports an explicit status poll, poll
+    # periodically so Home Assistant reflects live device state instead of only
+    # the last value commanded from HA.
+    if hasattr(device, "get_status_update"):
         poll_state = {"running": False}
 
         async def _async_poll_status(_now) -> None:
@@ -136,7 +137,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: SolixBLEConfigEntry) -> 
             try:
                 await device.get_status_update()
             except Exception as e:  # noqa: BLE001 - a failed poll must not raise
-                _LOGGER.debug("Scheduled F2000 status poll failed: %s", e)
+                _LOGGER.debug("Scheduled status poll failed: %s", e)
             finally:
                 poll_state["running"] = False
 
