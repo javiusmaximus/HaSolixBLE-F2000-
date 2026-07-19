@@ -80,7 +80,7 @@ async def async_setup_entry(
         )
 
     # Support for display brightness select
-    if type(device) in [F2000]:
+    if type(device) in [C1000, F2000]:
         selects.append(
             SolixSelectEntity(
                 device,
@@ -93,7 +93,7 @@ async def async_setup_entry(
         )
 
     # Support for display timeout select
-    if type(device) in [F2000]:
+    if type(device) in [C1000, F2000]:
         selects.append(
             SolixSelectEntity(
                 device,

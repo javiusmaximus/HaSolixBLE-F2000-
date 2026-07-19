@@ -76,7 +76,7 @@ async def async_setup_entry(
         )
 
     # Support for display on/off switch without status
-    if type(device) in [C300, C800, C1000]:
+    if type(device) in [C300, C800]:
         switches.append(
             SolixSwitchEntity(
                 device,
@@ -89,7 +89,7 @@ async def async_setup_entry(
         )
 
     # Support for display on/off switch with status
-    if type(device) in [F2000]:
+    if type(device) in [C1000, F2000]:
         switches.append(
             SolixSwitchEntity(
                 device,

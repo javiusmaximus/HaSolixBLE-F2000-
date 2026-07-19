@@ -58,7 +58,7 @@ async def async_setup_entry(
     sensors: list[SolixSensorEntity] = []
 
     # Charging status sensor
-    if type(device) in [C300, C300DC]:
+    if type(device) in [C300, C300DC, C1000]:
         sensors.append(
             SolixSensorEntity(
                 device,
