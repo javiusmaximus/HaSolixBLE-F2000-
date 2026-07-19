@@ -50,18 +50,30 @@ async def async_setup_entry(
     device = config_entry.runtime_data
     selects: list[SolixSelectEntity] = []
 
-    # Support for light mode select.
-    # NOTE: This is a write-only control (state_attribute=None) driven purely by
-    # the last commanded value. Neither model exposes a usable light-status
-    # readback: the C1000 has no light property at all, and on the F2000 the
-    # light telemetry key ('cf') is stuck reporting OFF regardless of state.
-    if type(device) in [C1000, F2000]:
+    # Support for light mode select - F2000: write-only. The F2000 light
+    # telemetry key ('cf') is stuck reporting OFF regardless of state, so there
+    # is no usable readback; drive state purely from the last commanded value.
+    if type(device) in [F2000]:
         selects.append(
             SolixSelectEntity(
                 device,
                 "Light Mode",
                 "light_mode",
                 None,
+                LIGHT_MODE_OPTIONS,
+                "set_light_mode",
+            )
+        )
+
+    # Support for light mode select - C1000: telemetry key 'dc' provides a
+    # reliable light-status readback, so this select reflects real device state.
+    if type(device) in [C1000]:
+        selects.append(
+            SolixSelectEntity(
+                device,
+                "Light Mode",
+                "light_mode",
+                "light",
                 LIGHT_MODE_OPTIONS,
                 "set_light_mode",
             )

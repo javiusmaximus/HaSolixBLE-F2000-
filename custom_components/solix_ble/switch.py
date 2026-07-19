@@ -50,7 +50,7 @@ async def async_setup_entry(
         )
 
     # Support for DC output switch with status
-    if type(device) in [C300, F2000]:
+    if type(device) in [C300, C1000, F2000]:
         switches.append(
             SolixSwitchEntity(
                 device,
@@ -63,7 +63,7 @@ async def async_setup_entry(
         )
 
     # Support for DC output switch without status
-    if type(device) in [C800, C1000]:
+    if type(device) in [C800]:
         switches.append(
             SolixSwitchEntity(
                 device,
