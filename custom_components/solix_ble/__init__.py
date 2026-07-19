@@ -34,7 +34,9 @@ _LOGGER = logging.getLogger(__name__)
 
 # Interval for actively polling devices for state that is not reliably pushed
 # over passive telemetry (see the status-poll setup in async_setup_entry).
-POLL_INTERVAL = timedelta(seconds=60)
+# Polling reuses the existing BLE connection - it does not open new ones - so
+# the cost is airtime on that link rather than extra connections.
+POLL_INTERVAL = timedelta(seconds=30)
 
 type SolixBLEConfigEntry = ConfigEntry[SolixBLEDevice]
 

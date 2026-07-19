@@ -84,6 +84,7 @@ class SolixNumberEntity(NumberEntity):
         self._set_function = getattr(device, set_function_attribute)
 
         self._attr_name = name
+        self._attr_native_value = None
         self._attr_unique_id = f"{device.address}_{attribute}"
         self._attr_native_min_value = min_value
         self._attr_native_max_value = max_value
@@ -107,8 +108,17 @@ class SolixNumberEntity(NumberEntity):
         """Update this entities updatable attrs from the devices state."""
         self._attr_available = self._device.available
 
-        state = getattr(self._device, self._state_attribute)
-        self._attr_native_value = None if state == -1 else state
+        try:
+            state = getattr(self._device, self._state_attribute)
+        except Exception:  # noqa: BLE001 - telemetry key absent from this push
+            return
+
+        # These settings are only reported on an explicit status poll. A passive
+        # telemetry push (e.g. after toggling an output) replaces the cached
+        # telemetry and omits them, making the property read -1. Keep the last
+        # known value in that case instead of blanking the entity.
+        if state != -1:
+            self._attr_native_value = state
 
     def _state_change_callback(self) -> None:
         """Run when device informs of state update. Updates local properties."""
@@ -119,3 +129,7 @@ class SolixNumberEntity(NumberEntity):
     async def async_set_native_value(self, value: float) -> None:
         """Set the value."""
         await self._set_function(int(value))
+        # Reflect immediately; the device only echoes this back on an explicit
+        # poll, which may be up to POLL_INTERVAL away.
+        self._attr_native_value = value
+        self.async_write_ha_state()
